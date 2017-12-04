@@ -1,10 +1,6 @@
-const moment = require("moment")
-
-
 
 const User = (user = {}) => {
-    return {
-        createdAt: moment().toISOString(),
+    return {,
         firstName: user.firstName || "",
         lastName: user.lastName || "",
         email: user.email || "",

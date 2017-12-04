@@ -1,3 +1,4 @@
+const moment = require("moment")
 const { objectID, insert, findOne, find, updateOne, remove } = require("./database.service")
 const { User } = require("../models/users.model")
 
@@ -16,7 +17,11 @@ const createUser = async (user) => {
     if (!businessUnits.find(x => x == user.businessUnit.toLowerCase())) {
         throw "Invalid Business Unit"
     }
-    return await insert({ ...User(), ...user })
+    return await insert({ 
+        ...User(), 
+        ...user, 
+        ...{ createdAt: moment().toISOString() } 
+    })
 }
 
 const getUser = async (id) => {
@@ -28,8 +33,17 @@ const getUsers = async (query) => {
 }
 
 const updateUser = async (id, changes) => {
+    if (
+        !changes.firstName ||
+        !changes.lastName ||
+        !changes.email ||
+        !changes.phone ||
+        !changes.businessUnit
+    ) {
+        throw "Missing Fields"
+    }
     let user = await getUser(id)
-    return await updateOne({ _id: new objectID(id) }, { ...User(), ...user, ...changes })
+    return await updateOne({ _id: new objectID(id) }, { ...User(), ...user, ...User(changes) })
 }
 
 const deleteUser = async (id) => {
