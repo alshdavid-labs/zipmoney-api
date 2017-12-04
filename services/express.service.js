@@ -5,6 +5,7 @@ const app = express()
 
 
 const routes = (router) => [
+    { url : '/',          route : 'index.get' },
     { url : '/users/',    route : 'users.get' },
     { url : '/users/',    route : 'users.post' },
     { url : '/users/',    route : 'users.patch' },
