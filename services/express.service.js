@@ -5,11 +5,12 @@ const app = express()
 
 
 const routes = (router) => [
-    { url : '/',          route : 'index.get' },
-    { url : '/users/',    route : 'users.get' },
-    { url : '/users/',    route : 'users.post' },
-    { url : '/users/',    route : 'users.patch' },
-    { url : '/users/',    route : 'users.delete' }
+    { url : '/',                route : 'index.get' },
+    { url : '/users/',          route : 'users.get' },
+    { url : '/users/',          route : 'users.post' },
+    { url : '/users/',          route : 'users.patch' },
+    { url : '/users/',          route : 'users.delete' },
+    { url : '/users/search/',   route : 'users.search.post' }
 ]
 .reduce((router,route) => router.use(route.url, require(`../routes/${route.route}/${route.route}.route`).router), router)
 

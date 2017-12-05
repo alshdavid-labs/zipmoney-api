@@ -1,5 +1,5 @@
 const moment = require("moment")
-const { objectID, insert, insertOne, findOne, find, updateOne, remove } = require("./database.service")
+const { objectID, insert, insertOne, findOne, find, updateOne, remove, anyCaseRegex, aggregate } = require("./database.service")
 const { User } = require("../models/users.model")
 
 const createUser = async (user) => {
@@ -32,6 +32,20 @@ const getUsers = async (query) => {
     return await find(query || {})
 }
 
+const searchUsers = async (term) => {
+    term = anyCaseRegex(term)
+    let res = await find({
+        $or: [
+            { firstName: term }, 
+            { lastName: term },
+            { email: term },
+            { phone: term },
+            { businessUnit: term }
+        ]
+    })
+    return res
+}
+
 const updateUser = async (id, changes) => {
     if (
         !changes.firstName ||
@@ -60,5 +74,6 @@ module.exports = {
     getUsers,
     updateUser,
     deleteUser,
-    deleteAllUsers
+    deleteAllUsers,
+    searchUsers
 }

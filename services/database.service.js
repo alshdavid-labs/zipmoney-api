@@ -38,6 +38,8 @@ const remove = (query, update) => new Promise(
     )
 )
 
+const anyCaseRegex = string => new RegExp(string, 'i')
+
 module.exports = {
     db,
     objectID: Engine.ObjectID,
@@ -46,5 +48,6 @@ module.exports = {
     findOne,
     find,
     updateOne,
-    remove
+    remove,
+    anyCaseRegex
 }
