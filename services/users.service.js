@@ -1,5 +1,5 @@
 const moment = require("moment")
-const { objectID, insert, findOne, find, updateOne, remove } = require("./database.service")
+const { objectID, insert, insertOne, findOne, find, updateOne, remove } = require("./database.service")
 const { User } = require("../models/users.model")
 
 const createUser = async (user) => {
@@ -17,13 +17,11 @@ const createUser = async (user) => {
     if (!businessUnits.find(x => x == user.businessUnit.toLowerCase())) {
         throw "Invalid Business Unit"
     }
-    let insertUser = { 
+    return await insertOne({ 
         ...User(), 
-        ...user, 
+        ...User(user), 
         ...{ createdAt: moment().toISOString() } 
-    }
-    console.log(insertUser)
-    return await insert(insertUser)
+    })
 }
 
 const getUser = async (id) => {

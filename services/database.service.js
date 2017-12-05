@@ -8,6 +8,12 @@ const insert = (documents) => new Promise(
     )
 )
 
+const insertOne = (documents) => new Promise(
+    (res, rej) => collection.insert(documents, {w:1}, 
+        (error, result) => error ? rej(error) : res(result[0])
+    )
+)
+
 const findOne = (query) => new Promise(
     (res, rej) => collection.findOne(query, 
         (error, result) => error ? rej(error) : res(result)
@@ -36,6 +42,7 @@ module.exports = {
     db,
     objectID: Engine.ObjectID,
     insert,
+    insertOne,
     findOne,
     find,
     updateOne,
