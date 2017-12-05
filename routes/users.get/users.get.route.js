@@ -5,11 +5,14 @@ const router = express.Router()
 
 router.get('', async (req, res) => {
     try {
-
+        let f = await getUsers()
+        if (req.query.amount) {
+            f = f.slice(0, req.query.amount)
+        }
         res
             .status(200)
             .set('Message', "Users Found")
-            .send(await getUsers())     
+            .send(f)     
     } catch (error) {
         res
             .status(500)

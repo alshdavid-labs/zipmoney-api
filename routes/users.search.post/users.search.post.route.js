@@ -6,6 +6,9 @@ const router = express.Router()
 router.post('', async (req, res) => {
     try {
         let s = await searchUsers(req.body.term)
+        if (req.query.amount) {
+            s = s.slice(0, req.query.amount)
+        }
         res
             .status(200)
             .set('Message', "Users Found")
