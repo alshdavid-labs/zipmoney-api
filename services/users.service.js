@@ -17,11 +17,13 @@ const createUser = async (user) => {
     if (!businessUnits.find(x => x == user.businessUnit.toLowerCase())) {
         throw "Invalid Business Unit"
     }
-    return await insert({ 
+    let insertUser = { 
         ...User(), 
         ...user, 
         ...{ createdAt: moment().toISOString() } 
-    })
+    }
+    console.log(insertUser)
+    return await insert(insertUser)
 }
 
 const getUser = async (id) => {
